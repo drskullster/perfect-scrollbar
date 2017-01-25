@@ -8,6 +8,8 @@ module.exports = {
   scrollYMarginOffset: 0,
   suppressScrollX: false,
   suppressScrollY: false,
+  startOffsetX: 0,
+  startOffsetY: 0,
   swipePropagation: true,
   useBothWheelAxes: false,
   wheelPropagation: false,

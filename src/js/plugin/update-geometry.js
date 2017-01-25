@@ -17,11 +17,11 @@ function getThumbSize(i, thumbSize) {
 }
 
 function updateCss(element, i) {
-  var xRailOffset = {width: i.railXWidth};
+  var xRailOffset = {width: i.railXWidth - i.settings.startOffsetX};
   if (i.isRtl) {
     xRailOffset.left = i.negativeScrollAdjustment + element.scrollLeft + i.containerWidth - i.contentWidth;
   } else {
-    xRailOffset.left = element.scrollLeft;
+    xRailOffset.left = element.scrollLeft + i.settings.startOffsetX;
   }
   if (i.isScrollbarXUsingBottom) {
     xRailOffset.bottom = i.scrollbarXBottom - element.scrollTop;
@@ -30,7 +30,7 @@ function updateCss(element, i) {
   }
   dom.css(i.scrollbarXRail, xRailOffset);
 
-  var yRailOffset = {top: element.scrollTop, height: i.railYHeight};
+  var yRailOffset = {top: element.scrollTop + i.settings.startOffsetY, height: i.railYHeight};
   if (i.isScrollbarYUsingRight) {
     if (i.isRtl) {
       yRailOffset.right = i.contentWidth - (i.negativeScrollAdjustment + element.scrollLeft) - i.scrollbarYRight - i.scrollbarYOuterWidth;
@@ -80,7 +80,7 @@ module.exports = function (element) {
 
   if (!i.settings.suppressScrollX && i.containerWidth + i.settings.scrollXMarginOffset < i.contentWidth) {
     i.scrollbarXActive = true;
-    i.railXWidth = i.containerWidth - i.railXMarginWidth;
+    i.railXWidth = i.containerWidth - i.railXMarginWidth - i.settings.startOffsetX;
     i.railXRatio = i.containerWidth / i.railXWidth;
     i.scrollbarXWidth = getThumbSize(i, _.toInt(i.railXWidth * i.containerWidth / i.contentWidth));
     i.scrollbarXLeft = _.toInt((i.negativeScrollAdjustment + element.scrollLeft) * (i.railXWidth - i.scrollbarXWidth) / (i.contentWidth - i.containerWidth));
@@ -90,7 +90,7 @@ module.exports = function (element) {
 
   if (!i.settings.suppressScrollY && i.containerHeight + i.settings.scrollYMarginOffset < i.contentHeight) {
     i.scrollbarYActive = true;
-    i.railYHeight = i.containerHeight - i.railYMarginHeight;
+    i.railYHeight = i.containerHeight - i.railYMarginHeight - i.settings.startOffsetY;
     i.railYRatio = i.containerHeight / i.railYHeight;
     i.scrollbarYHeight = getThumbSize(i, _.toInt(i.railYHeight * i.containerHeight / i.contentHeight));
     i.scrollbarYTop = _.toInt(element.scrollTop * (i.railYHeight - i.scrollbarYHeight) / (i.contentHeight - i.containerHeight));
