@@ -17,7 +17,7 @@ function getThumbSize(i, thumbSize) {
 }
 
 function updateCss(element, i) {
-  var xRailOffset = {width: i.railXWidth - i.settings.startOffsetX};
+  var xRailOffset = {width: i.railXWidth};
   if (i.isRtl) {
     xRailOffset.left = i.negativeScrollAdjustment + element.scrollLeft + i.containerWidth - i.contentWidth;
   } else {
